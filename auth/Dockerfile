@@ -4,4 +4,4 @@ RUN pip install pipenv
 COPY ./Pipfile* ./
 RUN pipenv install --ignore-pipfile --deploy
 COPY ./ ./
-CMD ["pipenv", "run", "python", "index.py" ]
+CMD ["pipenv", "run", "python", "./src/index.py" ]
