@@ -7,10 +7,9 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: posts.com
-      http:
+    - http:
         paths:
           - path: /api/users/?(.*)
             backend:
               serviceName: auth-cluster-ip-srv
-              servicePort: 3000
+              servicePort: 5000
