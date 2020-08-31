@@ -1,27 +1,14 @@
-from abc import ABC, abstractmethod, abstractproperty
-from typing import TypedDict, List
+class CustomError(Exception):
 
+    def __init__(self,reason='Custom Error'):
+        super().__init__(reason)
 
-# Must present params
-class SerializeErrorParamsBase(TypedDict):
-    message: str
-
-
-# Optional params
-class SerializeErrorParams(SerializeErrorParamsBase, total=False):
-    field: str
-
-
-class CustomError(ABC):
-
-    @abstractproperty
-    def status_code(self) -> int:
+    @property
+    def status_code(self):
         pass
 
-    @abstractmethod
-    def serialize_errors(self) -> List[SerializeErrorParams]:
+    def serialize_errors(self):
         pass
-
 
 if __name__ == "__main__":
     a = CustomError()
