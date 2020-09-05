@@ -8,9 +8,15 @@ class ErrorSingleSchema(BaseModel):
     message: str
     field: Optional[str]
 
+    class Config:
+        extra = 'forbid'
+
 
 class ErrorListSchema(BaseModel):
     errors: List[ErrorSingleSchema]
+
+    class Config:
+        extra = 'forbid'
 
 
 @app.errorhandler(Exception)
