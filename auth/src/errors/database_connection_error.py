@@ -1,10 +1,11 @@
 from src.errors.custom_error import CustomError
 
-class DatabaseConnectionError(CustomError):
-    reason = "Error Connecting to Database"
 
-    def __init__(self):
-        super().__init__(self.reason)
+class DatabaseConnectionError(CustomError):
+
+    def __init__(self, reason="Error Connecting to Database"):
+        super().__init__(reason)
+        self.reason = reason
 
     @property
     def status_code(self):

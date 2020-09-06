@@ -3,10 +3,10 @@ from src.errors.custom_error import CustomError
 
 class RequestValidationError(CustomError):
     errors = []
-    reason = 'Invalid request parmaters'
 
-    def __init__(self, errors):
-        super().__init__(self.reason)
+    def __init__(self, errors, reason='Invalid request parmaters'):
+        super().__init__(reason)
+        self.reason = reason
         self.errors = errors
 
     @property

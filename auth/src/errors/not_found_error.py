@@ -1,10 +1,11 @@
 from src.errors.custom_error import CustomError
 
-class NotFoundError(CustomError):
-    reason = "Not Found"
 
-    def __init__(self):
-        super().__init__(self.reason)
+class NotFoundError(CustomError):
+
+    def __init__(self, reason="Not Found"):
+        super().__init__(reason)
+        self.reason = reason
 
     @property
     def status_code(self):
