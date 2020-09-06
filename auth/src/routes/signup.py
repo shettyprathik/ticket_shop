@@ -11,16 +11,16 @@ from src.errors.bad_request_error import BadRequestError
 def signup():
 
     try:
-        req = request.get_json()
+        req = request.get_json() or {}
         usr = UserModel(**req)
-        usr = usr.dict()
 
-        existing_usr = mongo.db.user.find_one(usr)
+        existing_usr = mongo.db.user.find_one({'email': usr.email})
         if existing_usr:
             print(existing_usr, flush=True)
             raise BadRequestError('Existing User')
 
-        mongo.db.user.insert_one(usr)
+        usr.hash_password(usr.password)
+        mongo.db.user.insert_one(usr.dict())
         return dumps(usr)
 
     except ValidationError as e:
