@@ -21,6 +21,7 @@ def signup():
 
         usr.hash_password(usr.password)
         mongo.db.user.insert_one(usr.dict())
+        print(usr, flush=True)
         return dumps(usr)
 
     except ValidationError as e:
