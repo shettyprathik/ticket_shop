@@ -1,2 +1,4 @@
 class Config:
-    MONGO_URI = 'mongodb://auth-mongo-cluster-ip-srv/auth'
+    MONGODB_DB = 'auth'
+    MONGODB_HOST = 'auth-mongo-cluster-ip-srv'
+    MONGODB_PORT = 27017

@@ -9,7 +9,7 @@ mypy = "*"
 [packages]
 flask = "*"
 pydantic = "*"
-flask-pymongo = "*"
+flask-mongoengine = "*"
 
 [requires]
 python_version = "3.8"

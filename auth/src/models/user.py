@@ -1,27 +1,17 @@
-from pydantic import BaseModel, constr, ValidationError
-from typing import Optional
-from src.utils.password import Password
+from src import db
+from src.utils.password import hash_password, check_password
 
 
-class UserModel(BaseModel, Password):
-    _id: Optional[str]
-    email: constr(regex=r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$")
-    password: constr(min_length=4, max_length=20)
+class User(db.Document):
+    email = db.EmailField()
+    password = db.StringField()
 
     def response(self):
-        return {"id": self._id, "email": self.email}
+        return {"id": str(self.id), "email": self.email}
 
-    class Config:
-        extra = 'forbid'
+    def hash_password(self):
+        self.password = hash_password(self.password)
+        return self
 
-
-if __name__ == "__main__":
-    try:
-        a = UserModel(email='abcd@gmail.com', password='sfsdk')
-        print(a)
-        a.hash_password(a.password)
-        print(a)
-        print(a.check_password(a.password, 'sfsdk'))
-        print(UserModel(email='abcd@gmail.com', password='sfsdk').dict())
-    except ValidationError as e:
-        print(e.errors())
+    def check_password(self, password):
+        return check_password(self.password, password)
