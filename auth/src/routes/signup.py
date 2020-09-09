@@ -1,31 +1,27 @@
-from flask import request, jsonify, make_response
-from pydantic import ValidationError
+from flask import request, make_response
 from src import app, create_access_token, set_access_cookies
 from src.validators.user_request_validator import UsrReqValid
+from src.validators.request_validator import request_validator
 from src.models.user import User
-from src.errors.request_validation_error import RequestValidationError
 from src.errors.bad_request_error import BadRequestError
 
 
 @app.route('/api/users/signup', methods=['POST'])
+@request_validator(UsrReqValid)
 def signup():
-    try:
-        req = request.get_json() or {}
-        usr = UsrReqValid(**req)
 
-        existing_usr = User.objects(email=usr.email)
-        if existing_usr:
-            raise BadRequestError('Existing User')
+    usr = request.valid_body
 
-        new_usr = User(**usr.dict())
-        new_usr.hash_password()
-        new_usr.save()
+    existing_usr = User.objects(email=usr.email).first()
+    if existing_usr:
+        raise BadRequestError('Existing User')
 
-        resp = make_response(new_usr.response())
-        access_token = create_access_token(identity=str(new_usr.id))
-        set_access_cookies(resp, access_token)
+    new_usr = User(**usr.dict())
+    new_usr.hash_password()
+    new_usr.save()
 
-        return resp, 201
+    resp = make_response(new_usr.response())
+    access_token = create_access_token(identity=str(new_usr.id))
+    set_access_cookies(resp, access_token)
 
-    except ValidationError as e:
-        raise RequestValidationError(e.errors())
+    return resp, 201
