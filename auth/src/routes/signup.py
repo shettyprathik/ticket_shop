@@ -1,6 +1,6 @@
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from pydantic import ValidationError
-from src import app
+from src import app, create_access_token, set_access_cookies
 from src.validators.user_request_validator import UsrReqValid
 from src.models.user import User
 from src.errors.request_validation_error import RequestValidationError
@@ -21,7 +21,11 @@ def signup():
         new_usr.hash_password()
         new_usr.save()
 
-        return new_usr.response()
+        resp = make_response(new_usr.response())
+        access_token = create_access_token(identity=str(new_usr.id))
+        set_access_cookies(resp, access_token)
+
+        return resp, 201
 
     except ValidationError as e:
         raise RequestValidationError(e.errors())
