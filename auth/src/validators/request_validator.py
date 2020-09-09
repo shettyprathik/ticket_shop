@@ -13,7 +13,7 @@ def request_validator(ValidatorSchema):
             try:
                 req = request.get_json() or {}
                 request.valid_body = ValidatorSchema(**req)
-                return func()
+                return func(*args, **kwargs)
 
             except ValidationError as e:
                 raise RequestValidationError(e.errors())
