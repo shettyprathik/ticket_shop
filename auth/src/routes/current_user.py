@@ -1,6 +1,9 @@
-from src import app
-from src.errors.not_found_error import NotFoundError
+from src import app, get_jwt_identity
+from src.utils.jwt import verify_jwt
+
 
 @app.route("/api/users/current_user")
+@verify_jwt
 def current_user():
-    raise NotFoundError()
+    curr_usr = get_jwt_identity()
+    return curr_usr

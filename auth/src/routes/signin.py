@@ -1,5 +1,5 @@
-from flask import request
-from src import app
+from flask import request, make_response
+from src import app, create_access_token, set_access_cookies
 from src.validators.user_request_validator import UsrReqValid
 from src.validators.request_validator import request_validator
 from src.models.user import User
@@ -16,4 +16,11 @@ def signin():
     if not existing_usr:
         raise BadRequestError('Sign Up')
 
-    return "Sign in"
+    if not existing_usr.check_password(usr.password):
+        raise BadRequestError('Invalid Credentials')
+
+    resp = make_response(existing_usr.response())
+    access_token = create_access_token(identity=existing_usr.response())
+    set_access_cookies(resp, access_token)
+
+    return resp

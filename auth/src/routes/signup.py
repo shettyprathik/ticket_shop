@@ -21,7 +21,7 @@ def signup():
     new_usr.save()
 
     resp = make_response(new_usr.response())
-    access_token = create_access_token(identity=str(new_usr.id))
+    access_token = create_access_token(identity=new_usr.response())
     set_access_cookies(resp, access_token)
 
     return resp, 201
