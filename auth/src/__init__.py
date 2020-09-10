@@ -2,7 +2,8 @@ from flask import Flask
 from src.config import Config
 from flask_mongoengine import MongoEngine
 from flask_jwt_extended import (
-    JWTManager, create_access_token, set_access_cookies, verify_jwt_in_request, get_jwt_identity)
+    JWTManager, create_access_token, set_access_cookies,
+    verify_jwt_in_request, get_jwt_identity, unset_jwt_cookies)
 
 app = Flask(__name__)
 app.config.from_object(Config)
