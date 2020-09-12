@@ -8,6 +8,8 @@ build:
   artifacts:
     - image: xteleon/auth
       context: auth
+    - image: xteleon/client
+      context: client
 deploy:
   kubectl:
     manifests:
