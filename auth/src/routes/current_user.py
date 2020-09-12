@@ -6,4 +6,4 @@ from src.utils.jwt import verify_jwt
 @verify_jwt
 def current_user():
     curr_usr = get_jwt_identity()
-    return curr_usr
+    return {"current_user": curr_usr}
