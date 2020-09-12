@@ -23,4 +23,4 @@ class ErrorListSchema(BaseModel):
 def handle_error(err):
     serialize_errors = err.serialize_errors()
     error_out = ErrorListSchema(errors=serialize_errors).dict()
-    return jsonify(error_out)
+    return jsonify(error_out), err.status_code
