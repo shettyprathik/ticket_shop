@@ -8,12 +8,4 @@ const LandingPage = ({ current_user }) => {
   );
 };
 
-LandingPage.getInitialProps = async ({ req }) => {
-  try {
-    let resp = await buildClient(req).get("/api/users/current_user");
-    return resp.data;
-  } catch (err) {
-    return { current_user: null };
-  }
-};
 export default LandingPage;
