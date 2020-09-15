@@ -10,6 +10,8 @@ build:
       context: auth
     - image: xteleon/client
       context: client
+    - image: xteleon/ticket
+      context: ticket
 deploy:
   kubectl:
     manifests:
