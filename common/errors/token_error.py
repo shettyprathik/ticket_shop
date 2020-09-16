@@ -1,4 +1,4 @@
-from src.errors.custom_error import CustomError
+from common.errors.custom_error import CustomError
 
 
 class TokenError(CustomError):

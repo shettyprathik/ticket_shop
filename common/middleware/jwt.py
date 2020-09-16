@@ -1,6 +1,6 @@
 import functools
-from src import verify_jwt_in_request
-from src.errors.token_error import TokenError
+from flask_jwt_extended import verify_jwt_in_request
+from common.errors.token_error import TokenError
 
 
 def verify_jwt(func):
@@ -8,8 +8,7 @@ def verify_jwt(func):
     def wrapper(*args, **kwargs):
         try:
             verify_jwt_in_request()
-            return func(*args, **kwargs)
         except:
             raise TokenError("Token Error")
-
+        return func(*args, **kwargs)
     return wrapper

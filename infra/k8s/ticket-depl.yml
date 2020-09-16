@@ -1,45 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: ticket-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: ticket
   template:
     metadata:
       labels:
-        app: auth
+        app: ticket
     spec:
       containers:
-        - name: auth
-          image: xteleon/auth
-          volumeMounts:
-            - mountPath: /app/common
-              name: common
+        - name: ticket
+          image: xteleon/ticket
           env:
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
-      volumes:
-        - name: common
-          hostPath:
-            path: /common
-            type: Directory
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-cluster-ip-srv
+  name: ticket-cluster-ip-srv
 spec:
   type: ClusterIP
   selector:
-    app: auth
+    app: ticket
   ports:
     - protocol: TCP
-      port: 5000
-      targetPort: 5000
+      port: 6000
+      targetPort: 6000

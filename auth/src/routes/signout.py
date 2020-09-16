@@ -1,4 +1,5 @@
-from src import app, unset_jwt_cookies
+from src import app
+from flask_jwt_extended import unset_jwt_cookies
 from flask import jsonify
 
 
