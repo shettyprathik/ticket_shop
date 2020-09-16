@@ -1,9 +1,10 @@
 from flask import request, make_response
-from src import app, create_access_token, set_access_cookies
+from src import app
+from flask_jwt_extended import create_access_token, set_access_cookies
 from src.validators.user_request_validator import UsrReqValid
-from src.validators.request_validator import request_validator
+from common.middleware.request_validator import request_validator
 from src.models.user import User
-from src.errors.bad_request_error import BadRequestError
+from common.errors.bad_request_error import BadRequestError
 
 
 @app.route('/api/users/signin', methods=['POST'])
