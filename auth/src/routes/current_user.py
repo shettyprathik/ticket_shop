@@ -1,5 +1,6 @@
-from src import app, get_jwt_identity
-from src.utils.jwt import verify_jwt
+from src import app
+from flask_jwt_extended import get_jwt_identity
+from common.middleware.jwt import verify_jwt
 
 
 @app.route("/api/users/current_user")

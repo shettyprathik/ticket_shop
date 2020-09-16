@@ -1,9 +1,8 @@
 from flask import Flask
 from src.config import Config
 from flask_mongoengine import MongoEngine
-from flask_jwt_extended import (
-    JWTManager, create_access_token, set_access_cookies,
-    verify_jwt_in_request, get_jwt_identity, unset_jwt_cookies)
+from flask_jwt_extended import JWTManager
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -11,4 +10,7 @@ db = MongoEngine(app)
 jwt = JWTManager(app)
 
 from src.routes import current_user, signup, signout, signin
-from src.middleware import error_handler
+from common.middleware.error_handler import handle_error
+
+
+app.errorhandler(Exception)(handle_error)

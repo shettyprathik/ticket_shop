@@ -15,12 +15,20 @@ spec:
       containers:
         - name: auth
           image: xteleon/auth
+          volumeMounts:
+            - mountPath: /app/common
+              name: common
           env:
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
+      volumes:
+        - name: common
+          hostPath:
+            path: /common
+            type: Directory
 
 ---
 apiVersion: v1
