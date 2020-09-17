@@ -6,4 +6,8 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db = MongoEngine(app)
 
-from src.routes import new_ticket
+from src.routes import create_ticket
+from common.middleware.error_handler import handle_error
+
+
+app.errorhandler(Exception)(handle_error)
