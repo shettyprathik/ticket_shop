@@ -9,4 +9,4 @@ class Config:
     JWT_TOKEN_LOCATION = ['cookies']
     JWT_ACCESS_TOKEN_EXPIRES = 30 * 60
     JWT_SECRET_KEY = os.environ['JWT_KEY']
-    JWT_COOKIE_CSRF_PROTECT = True
+    JWT_COOKIE_CSRF_PROTECT = False

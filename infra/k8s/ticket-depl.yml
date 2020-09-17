@@ -27,7 +27,7 @@ spec:
       volumes:
         - name: common
           hostPath:
-            path: /common
+            path: /run/desktop/mnt/host/d/Prathik/ticket_shop/common
             type: Directory
 
 ---

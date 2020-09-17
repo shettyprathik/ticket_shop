@@ -11,5 +11,7 @@ from src.validators.ticket_validator import TicketReqVal
 @request_validator(TicketReqVal)
 def create_ticket():
     ticket = request.valid_body
-    new_ticket = Ticket(**ticket.dict(), user_id=123)
+    new_ticket = Ticket(**ticket.dict(), user_id="123")
+    new_ticket.save()
+    print(new_ticket.id, flush=True)
     return new_ticket.response(), 201

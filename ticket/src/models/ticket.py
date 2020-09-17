@@ -7,4 +7,4 @@ class Ticket(db.Document):
     user_id = db.StringField(required=True)
 
     def response(self):
-        return {"id": str(self.id), "title": self.title, "price": self.price}
+        return {"id": str(self.id), "title": self.title, "price": self.price, "user_id": self.user_id}
