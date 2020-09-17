@@ -15,4 +15,7 @@ build:
 deploy:
   kubectl:
     manifests:
-      - infra/k8s/*
+      - infra/k8s/common/*
+      - infra/k8s/auth/*
+      # - infra/k8s/client/*
+      - infra/k8s/ticket/*
