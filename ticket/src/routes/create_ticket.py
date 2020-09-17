@@ -3,15 +3,17 @@ from src import app
 from src.models.ticket import Ticket
 from common.middleware.jwt import verify_jwt
 from common.middleware.request_validator import request_validator
+from common.middleware.current_user import get_current_user
 from src.validators.ticket_validator import TicketReqVal
 
 
 @app.route('/api/tickets', methods=['POST'])
 @verify_jwt
+@get_current_user
 @request_validator(TicketReqVal)
 def create_ticket():
     ticket = request.valid_body
-    new_ticket = Ticket(**ticket.dict(), user_id="123")
+    new_ticket = Ticket(**ticket.dict(), user_id=request.current_user['id'])
     new_ticket.save()
     print(new_ticket.id, flush=True)
     return new_ticket.response(), 201
