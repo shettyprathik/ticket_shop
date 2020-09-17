@@ -3,7 +3,7 @@ from common.errors.custom_error import CustomError
 
 class TokenError(CustomError):
 
-    def __init__(self, reason="Token Error"):
+    def __init__(self, reason="Not Authorized"):
         super().__init__(reason)
         self.reason = reason
 
