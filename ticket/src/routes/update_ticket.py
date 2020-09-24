@@ -23,6 +23,7 @@ def upd_ticket(id_):
         raise TokenError('Not Authorized')
 
     existing_ticket.update(**request.valid_body.dict())
+
     existing_ticket.save()
 
-    return existing_ticket.response()
+    return {}, 204
