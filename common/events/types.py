@@ -1,7 +1,8 @@
-from enum import Enum
+class ExchangeType:
+    TICKET = 'TICKET'
 
 
 class EventType:
-    class Ticket(Enum):
+    class Ticket:
         CREATED = 'TICKET_CREATED'
         UPDATED = 'TICKET_UPDATED'
