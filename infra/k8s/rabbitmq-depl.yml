@@ -14,7 +14,23 @@ spec:
     spec:
       containers:
         - name: rabbitmq
-          image: rabbitmq:management
+          image: rabbitmq
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-secret
+                  key: RABBIT_USER
+            - name: RABBITMQ_DEFAULT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-secret
+                  key: RABBIT_PASSOWORD
+            - name: RABBITMQ_DEFAULT_VHOST
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-secret
+                  key: RABBIT_VHOST
 ---
 apiVersion: v1
 kind: Service
@@ -25,11 +41,6 @@ spec:
   selector:
     app: rabbitmq
   ports:
-    - name: rabbitmq-queue
-      protocol: TCP
+    - protocol: TCP
       port: 5672
       targetPort: 5672
-    - name: rabbitmq-management
-      protocol: TCP
-      port: 15672
-      targetPort: 15672
