@@ -7,8 +7,9 @@ from common.errors.not_found_error import NotFoundError
 from common.errors.token_error import TokenError
 from common.middleware.current_user import get_current_user
 from common.middleware.request_validator import request_validator
+from common.events.ticket.ticket_updated_event import TicketUpdatedEvent
+from common.events.publish import publish_event
 from src.validators.ticket_validator import TicketReqVal
-
 import pika
 from src.config import Config
 from common.events.types import EventType, ExchangeType
@@ -30,7 +31,7 @@ def upd_ticket(id_):
     existing_ticket.update(**request.valid_body.dict())
 
     existing_ticket.save()
-    publish_channel.basic_publish(
-        exchange=ExchangeType.TICKET, routing_key=EventType.Ticket.UPDATED, body='TicketUpdated')
+    publish_event(publish_channel, TicketUpdatedEvent(
+        data='TicketUpdated'))
 
     return {}, 204

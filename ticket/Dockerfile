@@ -1,4 +1,4 @@
-FROM xteleon/common:latest as common
+FROM xteleon/common:0.0.3 as common
 
 FROM python:3.8.2
 WORKDIR /app
