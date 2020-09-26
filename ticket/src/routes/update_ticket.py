@@ -1,12 +1,18 @@
 from flask import request
 from src import app
+from src.pub_broker import publish_channel
 from src.models.ticket import Ticket
 from common.middleware.jwt import verify_jwt
 from common.errors.not_found_error import NotFoundError
 from common.errors.token_error import TokenError
 from common.middleware.current_user import get_current_user
 from common.middleware.request_validator import request_validator
+from common.events.ticket.ticket_updated_event import TicketUpdatedEvent
+from common.events.publish import publish_event
 from src.validators.ticket_validator import TicketReqVal
+import pika
+from src.config import Config
+from common.events.types import EventType, ExchangeType
 
 
 @app.route('/api/tickets/<id_>', methods=['PUT'])
@@ -23,6 +29,9 @@ def upd_ticket(id_):
         raise TokenError('Not Authorized')
 
     existing_ticket.update(**request.valid_body.dict())
-    existing_ticket.save()
 
-    return existing_ticket.response()
+    existing_ticket.save()
+    publish_event(publish_channel, TicketUpdatedEvent(
+        data='TicketUpdated'))
+
+    return {}, 204
