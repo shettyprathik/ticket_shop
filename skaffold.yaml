@@ -12,6 +12,8 @@ build:
       context: client
     - image: xteleon/ticket
       context: ticket
+    - image: xteleon/orders
+      context: orders
 deploy:
   kubectl:
     manifests:

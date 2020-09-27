@@ -21,8 +21,6 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
-<<<<<<< HEAD
-=======
             - name: BROKER_USER
               valueFrom:
                 secretKeyRef:
@@ -38,7 +36,6 @@ spec:
                 secretKeyRef:
                   name: rabbitmq-secret
                   key: RABBIT_VHOST
->>>>>>> 0156a6df5ae8697cbcd5345116f15d658e4a4c3e
 ---
 apiVersion: v1
 kind: Service
