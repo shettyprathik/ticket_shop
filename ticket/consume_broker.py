@@ -44,6 +44,6 @@ consume_channel.basic_consume(queue=EventType.Ticket.CREATED,
 consume_channel.basic_consume(queue=EventType.Ticket.UPDATED,
                               on_message_callback=callback, auto_ack=True)
 
-
-thread = Thread(target=consume_channel.start_consuming)
-thread.start()
+consume_channel.start_consuming()
+# thread = Thread(target=consume_channel.start_consuming)
+# thread.start()

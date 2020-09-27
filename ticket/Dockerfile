@@ -7,4 +7,4 @@ COPY ./Pipfile* ./
 RUN pipenv install --ignore-pipfile --deploy
 COPY ./ ./
 COPY --from=common /app /app/common
-CMD ["pipenv", "run", "python", "index.py"]
+CMD ["/bin/bash", "-c", "pipenv run gunicorn index:app -b 0.0.0.0:6000 --daemon && pipenv run python consume_broker.py"]
