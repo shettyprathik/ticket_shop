@@ -8,7 +8,7 @@ app.config.from_object(Config)
 db = MongoEngine(app)
 jwt = JWTManager(app)
 
-from src.routes import create_order, update_order, show_order, index_order
+from src.routes import create_order, delete_order, show_order, index_order
 from common.middleware.error_handler import handle_error
 
 
