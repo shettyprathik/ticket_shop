@@ -6,10 +6,11 @@ import datetime
 class Order(db.Document):
     user_id = db.StringField()
     status = db.StringField(choices=tuple(
-        types.get_events(types.EventType.Orders())), default=types.EventType.Orders.CREATED)
+        types.get_events(types.EventType.Order())), default=types.EventType.Order.CREATED)
     expires_at = db.DateTimeField(
         default=datetime.datetime.now() + datetime.timedelta(minutes=15))
     ticket = db.ReferenceField('Ticket')
+    version = db.IntField(default=0)
 
     def response(self):
         return {
@@ -17,5 +18,18 @@ class Order(db.Document):
             "user_id": self.user_id,
             "status": self.status,
             "expires_at": str(self.expires_at),
-            "ticket": self.ticket.response()
+            "ticket": self.ticket.response(),
+            "version": self.version
         }
+
+    def update_version_if_record_exists(self):
+        if not self.id:
+            return
+
+        existing_record = Order.objects(id=self.id)
+        if existing_record:
+            self.version += 1
+
+    def save(self, *args, **kwargs):
+        self.update_version_if_record_exists()
+        super().save(*args, **kwargs)

@@ -1,5 +1,6 @@
 class ExchangeType:
     TICKET = 'TICKET'
+    ORDER = 'ORDER'
 
 
 class EventType:
@@ -7,7 +8,7 @@ class EventType:
         CREATED = 'TICKET_CREATED'
         UPDATED = 'TICKET_UPDATED'
 
-    class Orders:
+    class Order:
         CREATED = 'ORDER_CREATED'
         CANCELLED = 'ORDER_CANCELLED'
         AWAIT_PAYMENT = 'ORDER_AWAIT_PAYMENT'

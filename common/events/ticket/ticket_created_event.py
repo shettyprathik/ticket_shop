@@ -7,10 +7,12 @@ class EventData(BaseModel):
     price: confloat(gt=0)
     title: constr(min_length=5, max_length=50)
     user_id: str
+    version: int
 
 
 class TicketCreatedEvent(BaseModel):
     event_type: constr(
-        regex=EventType.Ticket.CREATED) = EventType.Ticket.CREATED
-    exchange_type: constr(regex=ExchangeType.TICKET) = ExchangeType.TICKET
+        regex=f"^{EventType.Ticket.CREATED}$") = EventType.Ticket.CREATED
+    exchange_type: constr(
+        regex=f"^{ExchangeType.TICKET}$") = ExchangeType.TICKET
     data: EventData

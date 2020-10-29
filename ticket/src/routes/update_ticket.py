@@ -5,6 +5,7 @@ from src.models.ticket import Ticket
 from common.middleware.jwt import verify_jwt
 from common.errors.not_found_error import NotFoundError
 from common.errors.token_error import TokenError
+from common.errors.bad_request_error import BadRequestError
 from common.middleware.current_user import get_current_user
 from common.middleware.request_validator import request_validator
 from common.events.ticket.ticket_updated_event import TicketUpdatedEvent
@@ -28,10 +29,13 @@ def upd_ticket(id_):
     if existing_ticket.user_id != request.current_user['id']:
         raise TokenError('Not Authorized')
 
-    existing_ticket.update(**request.valid_body.dict())
+    if existing_ticket.order_id:
+        raise BadRequestError("Cannot update reserved ticket")
 
+    existing_ticket.modify(**request.valid_body.dict())
     existing_ticket.save()
+    print(existing_ticket.response(), flush=True)
     publish_event(publish_channel, TicketUpdatedEvent(
-        data='TicketUpdated'))
+        data=existing_ticket.response()))
 
     return {}, 204

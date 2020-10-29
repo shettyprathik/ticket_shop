@@ -1,4 +1,5 @@
 import os
+import pika
 
 
 class Config:
@@ -15,3 +16,5 @@ class Config:
     BROKER_USER = os.environ['BROKER_USER']
     BROKER_PASSWORD = os.environ['BROKER_PASSWORD']
     BROKER_VHOST = os.environ['BROKER_VHOST']
+    BROKER_CRED = pika.PlainCredentials(
+        username=BROKER_USER, password=BROKER_PASSWORD)

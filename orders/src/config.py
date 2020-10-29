@@ -1,9 +1,10 @@
 import os
+import pika
 
 
 class Config:
-    MONGODB_DB = 'ticket'
-    MONGODB_HOST = 'ticket-mongo-cluster-ip-srv'
+    MONGODB_DB = 'order'
+    MONGODB_HOST = 'orders-mongo-cluster-ip-srv'
     MONGODB_PORT = 27017
 
     JWT_TOKEN_LOCATION = ['cookies']
@@ -15,3 +16,5 @@ class Config:
     BROKER_USER = os.environ['BROKER_USER']
     BROKER_PASSWORD = os.environ['BROKER_PASSWORD']
     BROKER_VHOST = os.environ['BROKER_VHOST']
+    BROKER_CRED = pika.PlainCredentials(
+        username=BROKER_USER, password=BROKER_PASSWORD)

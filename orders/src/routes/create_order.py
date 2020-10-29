@@ -8,6 +8,9 @@ from common.middleware.jwt import verify_jwt
 from common.middleware.current_user import get_current_user
 from common.middleware.request_validator import request_validator
 from src.validators.order_validator import OrderReqVal
+from common.events.order.order_created_event import OrderCreatedEvent
+from common.events.publish import publish_event
+from src.pub_broker import publish_channel
 
 
 @app.route('/api/orders', methods=['POST'])
@@ -27,5 +30,18 @@ def create_order():
     new_order = Order(
         user_id=request.current_user['id'], ticket=existing_ticket)
     new_order.save()
+
+    publish_event(publish_channel, OrderCreatedEvent(
+        data={
+            "id": str(new_order.id),
+            "user_id": request.current_user['id'],
+            "expires_at": str(new_order.expires_at),
+            "ticket": {
+                "id": str(existing_ticket.id),
+                "price": existing_ticket.price
+            },
+            "version": new_order.version
+        }))
+
     resp = new_order.response()
     return resp
