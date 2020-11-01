@@ -14,6 +14,8 @@ build:
       context: ticket
     - image: xteleon/orders
       context: orders
+    - image: xteleon/expiration
+      context: expiration
 deploy:
   kubectl:
     manifests:

@@ -7,4 +7,4 @@ COPY ./Pipfile* ./
 RUN pipenv install --ignore-pipfile --deploy
 COPY ./ ./
 COPY --from=common /app /app/common
-CMD ["pipenv", "run", "python", "index.py"]
+CMD ["/bin/bash","-c", "pipenv run celery -A src worker -l INFO -D && pipenv run python index.py"]

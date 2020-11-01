@@ -1,9 +1,11 @@
 class ExchangeType:
     TICKET = 'TICKET'
     ORDER = 'ORDER'
+    EXPIRATION = 'EXPIRATION'
 
 
 class EventType:
+
     class Ticket:
         CREATED = 'TICKET_CREATED'
         UPDATED = 'TICKET_UPDATED'
@@ -13,6 +15,10 @@ class EventType:
         CANCELLED = 'ORDER_CANCELLED'
         AWAIT_PAYMENT = 'ORDER_AWAIT_PAYMENT'
         COMPLETE = 'ORDER_COMPLETE'
+
+    class Expiration:
+        START_COUNTER = 'EXPIRATION_START_COUNTER'
+        COMPLETE = 'EXPIRATION_COMPLETE'
 
 
 def get_events(event_type_obj):

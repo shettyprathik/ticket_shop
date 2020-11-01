@@ -1,4 +1,5 @@
 from src import db
+from src.config import Config
 from common.events import types
 import datetime
 
@@ -8,7 +9,7 @@ class Order(db.Document):
     status = db.StringField(choices=tuple(
         types.get_events(types.EventType.Order())), default=types.EventType.Order.CREATED)
     expires_at = db.DateTimeField(
-        default=datetime.datetime.now() + datetime.timedelta(minutes=15))
+        default=datetime.datetime.now() + datetime.timedelta(minutes=Config.ORDER_EXPIRE_TIME_MIN))
     ticket = db.ReferenceField('Ticket')
     version = db.IntField(default=0)
 
